@@ -11,46 +11,41 @@ namespace ScarletLock
     {
         protected Func<TIdentity> IdentityGenerator { get; }
 
-        protected TimeSpan DefaultLockTimeoutDelay { get; }
-
-        protected DistributedLockFactory(Func<TIdentity> identityGenerator, TimeSpan defaultLockTimeoutDelay)
+        protected DistributedLockFactory(Func<TIdentity> identityGenerator)
         {
             IdentityGenerator = identityGenerator;
-            DefaultLockTimeoutDelay = defaultLockTimeoutDelay;
         }
 
-        public virtual IDistributedLock<TIdentity> EstablishLock(string resource)
+        public virtual IDistributedLock<TIdentity> EstablishLock(PreliminaryLock<TIdentity> preliminaryLock, TimeSpan expiration)
         {
-            return DistributedLock<TIdentity>.EstablishLock(resource, GenerateIdentity(), DefaultLockTimeoutDelay);
+            return DistributedLock<TIdentity>.EstablishLock(preliminaryLock.Resource, preliminaryLock.Identity, expiration);
         }
 
-        public virtual IDistributedLock<TIdentity> EstablishLock(string resource, TimeSpan lockTimeoutDelay)
+        public virtual PreliminaryLock<TIdentity> GetPreliminaryLock(string resoure)
         {
-            return DistributedLock<TIdentity>.EstablishLock(resource, GenerateIdentity(), lockTimeoutDelay);
+            return new PreliminaryLock<TIdentity>(IdentityGenerator(), resoure);
         }
 
         protected virtual TIdentity GenerateIdentity()
         {
-            TIdentity identity = default(TIdentity);
-
             try
             {
-                identity = IdentityGenerator.Invoke();
+                var identity = IdentityGenerator();
+
+                if (identity.Equals(default(TIdentity)))
+                    throw new IdentityGenerationException("Identity generatator provided default value.");
+
+                return identity;
             }
-            catch (Exception ex)
+            catch (Exception ex) when (!(ex is IdentityGenerationException))
             {
                 throw new IdentityGenerationException("An exception occured in identity generator", ex);
             }
-
-            if (identity.Equals(default(TIdentity)))
-                throw new IdentityGenerationException("Identity generatator provided default value.");
-
-            return identity;
         }
 
-        internal static IDistributedLockFactory<TIdentity> Create(Func<TIdentity> identityGenerator, TimeSpan defaultLockTimeoutDelay)
+        internal static IDistributedLockFactory<TIdentity> Create(Func<TIdentity> identityGenerator)
         {
-            return new DistributedLockFactory<TIdentity>(identityGenerator, defaultLockTimeoutDelay);
+            return new DistributedLockFactory<TIdentity>(identityGenerator);
         }
     }
 }

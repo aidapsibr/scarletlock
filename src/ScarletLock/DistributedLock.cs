@@ -5,22 +5,22 @@ namespace ScarletLock
     public class DistributedLock<TIdentity> 
         : IDistributedLock<TIdentity>
     {
-        protected DistributedLock(string resource, TIdentity identity, TimeSpan timeout)
+        protected DistributedLock(string resource, TIdentity identity, TimeSpan expiration)
         {
             Resource = resource;
             Identity = identity;
-            Timeout = timeout;
+            Expiration = expiration;
         }
 
         public string Resource { get; }
 
         public TIdentity Identity { get; }
 
-        public TimeSpan Timeout { get; }
+        public TimeSpan Expiration { get; }
 
-        internal static IDistributedLock<TIdentity> EstablishLock(string resource, TIdentity identity, TimeSpan timeout)
+        internal static IDistributedLock<TIdentity> EstablishLock(string resource, TIdentity identity, TimeSpan expiration)
         {
-            return new DistributedLock<TIdentity>(resource, identity, timeout);
+            return new DistributedLock<TIdentity>(resource, identity, expiration);
         }
     }
 }

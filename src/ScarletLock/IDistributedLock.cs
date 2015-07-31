@@ -2,12 +2,12 @@
 
 namespace ScarletLock
 {
-    public interface IDistributedLock<TIdentity>
+    public interface IDistributedLock<out TIdentity>
     {
         string Resource { get; }
 
         TIdentity Identity { get; }       
 
-        TimeSpan Timeout { get; }
+        TimeSpan Expiration { get; }
     }
 }

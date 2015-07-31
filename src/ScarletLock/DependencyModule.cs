@@ -14,7 +14,7 @@ namespace ScarletLock
 
             container
                 .Register((kernel, overloads) =>
-                    DistributedLockFactory<Guid>.Create(() => Guid.NewGuid(), TimeSpan.FromSeconds(10)))
+                    DistributedLockFactory<Guid>.Create(Guid.NewGuid, TimeSpan.FromSeconds(10)))
                 .AsSingleton();
         }
     }

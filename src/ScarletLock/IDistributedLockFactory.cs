@@ -4,8 +4,9 @@ namespace ScarletLock
 {
     public interface IDistributedLockFactory<TIdentity>
     {
-        IDistributedLock<TIdentity> EstablishLock(string resource);
 
-        IDistributedLock<TIdentity> EstablishLock(string resource, TimeSpan lockTimeoutDelay);
+        IDistributedLock<TIdentity> EstablishLock(PreliminaryLock<TIdentity> preliminaryLock , TimeSpan expiration);
+
+        PreliminaryLock<TIdentity> GetPreliminaryLock(string resoure);
     }
 }
