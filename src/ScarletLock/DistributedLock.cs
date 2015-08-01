@@ -5,8 +5,10 @@ namespace ScarletLock
     public class DistributedLock<TIdentity> 
         : IDistributedLock<TIdentity>
     {
-        protected DistributedLock(string resource, TIdentity identity, TimeSpan expiration)
+        private readonly IDistributedLockManager<TIdentity> _DistributedLockManager; 
+        protected DistributedLock(IDistributedLockManager<TIdentity> dlm, string resource, TIdentity identity, DateTime expiration)
         {
+            _DistributedLockManager = dlm;
             Resource = resource;
             Identity = identity;
             Expiration = expiration;
@@ -16,11 +18,43 @@ namespace ScarletLock
 
         public TIdentity Identity { get; }
 
-        public TimeSpan Expiration { get; }
+        public DateTime Expiration { get; }
 
-        internal static IDistributedLock<TIdentity> EstablishLock(string resource, TIdentity identity, TimeSpan expiration)
+        public bool IsReleased { get; private set; }
+
+        public bool IsExpired => DateTime.Now >= Expiration;
+
+        public void Release()
         {
-            return new DistributedLock<TIdentity>(resource, identity, expiration);
+            if (!IsReleased && !IsExpired)
+            {
+                _DistributedLockManager?.ReleaseDistributedLockAsync(this).Wait();
+                IsReleased = true;
+            }
+        }
+
+        internal static IDistributedLock<TIdentity> EstablishLock(IDistributedLockManager<TIdentity> dlm, string resource, TIdentity identity, DateTime expiration)
+        {
+            return new DistributedLock<TIdentity>(dlm, resource, identity, expiration);
+        }
+
+        /// <summary>
+        /// Performs application-defined tasks associated with freeing, releasing, or resetting unmanaged resources.
+        /// </summary>
+        public void Dispose()
+        {
+            Dispose(true);
+        }
+
+        /// <summary>
+        /// Performs application-defined tasks associated with freeing, releasing, or resetting unmanaged resources.
+        /// </summary>
+        protected void Dispose(bool isDisposing)
+        {
+            if (isDisposing)
+            {
+                Release();
+            }
         }
     }
 }

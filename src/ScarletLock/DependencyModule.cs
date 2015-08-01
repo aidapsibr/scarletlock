@@ -1,8 +1,5 @@
 ﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
+using ScarletLock.TinyIoC;
 
 namespace ScarletLock
 {
@@ -10,12 +7,15 @@ namespace ScarletLock
     {
         public void Register()
         {
-            var container = TinyIoC.TinyIoCContainer.Current;
+            var container = TinyIoCContainer.Current;
 
             container
                 .Register((kernel, overloads) =>
-                    DistributedLockFactory<Guid>.Create(Guid.NewGuid, TimeSpan.FromSeconds(10)))
-                .AsSingleton();
+                    DistributedLockFactory<Guid>.Create(Guid.NewGuid));
+
+            container
+                .Register((kernel, oerloads) =>
+                    RedisConnectionFactory.BuildConnectionFactory());
         }
     }
 }

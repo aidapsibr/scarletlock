@@ -4,11 +4,11 @@ using System.Runtime.InteropServices;
 // General Information about an assembly is controlled through the following 
 // set of attributes. Change these attribute values to modify the information
 // associated with an assembly.
-[assembly: AssemblyTitle("ScarletLock")]
+[assembly: AssemblyTitle("ScarletLock.Tests")]
 [assembly: AssemblyDescription("")]
 [assembly: AssemblyConfiguration("")]
 [assembly: AssemblyCompany("")]
-[assembly: AssemblyProduct("ScarletLock")]
+[assembly: AssemblyProduct("ScarletLock.Tests")]
 [assembly: AssemblyCopyright("Copyright ©  2015")]
 [assembly: AssemblyTrademark("")]
 [assembly: AssemblyCulture("")]
@@ -19,7 +19,7 @@ using System.Runtime.InteropServices;
 [assembly: ComVisible(false)]
 
 // The following GUID is for the ID of the typelib if this project is exposed to COM
-[assembly: Guid("f753eb32-eae1-4928-9ac6-96c9b27aee45")]
+[assembly: Guid("b6caa7e5-6eff-4bf1-8032-8223a8b58b13")]
 
 // Version information for an assembly consists of the following four values:
 //

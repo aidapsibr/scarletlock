@@ -1,8 +1,4 @@
 ﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 
 namespace ScarletLock
 {
@@ -16,9 +12,9 @@ namespace ScarletLock
             IdentityGenerator = identityGenerator;
         }
 
-        public virtual IDistributedLock<TIdentity> EstablishLock(PreliminaryLock<TIdentity> preliminaryLock, TimeSpan expiration)
+        public virtual IDistributedLock<TIdentity> EstablishLock(IDistributedLockManager<TIdentity> dlm, PreliminaryLock<TIdentity> preliminaryLock, DateTime expiration)
         {
-            return DistributedLock<TIdentity>.EstablishLock(preliminaryLock.Resource, preliminaryLock.Identity, expiration);
+            return DistributedLock<TIdentity>.EstablishLock(dlm, preliminaryLock.Resource, preliminaryLock.Identity, expiration);
         }
 
         public virtual PreliminaryLock<TIdentity> GetPreliminaryLock(string resoure)
@@ -43,7 +39,7 @@ namespace ScarletLock
             }
         }
 
-        internal static IDistributedLockFactory<TIdentity> Create(Func<TIdentity> identityGenerator)
+        public static IDistributedLockFactory<TIdentity> Create(Func<TIdentity> identityGenerator)
         {
             return new DistributedLockFactory<TIdentity>(identityGenerator);
         }
