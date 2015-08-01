@@ -1,7 +1,9 @@
 ﻿using System;
+using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using Polly;
 using ScarletLock.TinyIoC;
 
 namespace ScarletLock
@@ -9,15 +11,18 @@ namespace ScarletLock
     public class DistributedLockManager<TIdentity> : IDistributedLockManager<TIdentity>
     {
         protected DistributedLockManager(IDistributedLockFactory<TIdentity> lockFactory,
-            TimeSpan defaultTTL,
+            TimeSpan defaultTTL, Policy retryPolicy,
             params IConnection[] connections)
         {
             DistributedLockFactory = lockFactory;
             DefaultTTL = defaultTTL;
+            RetryPolicy = retryPolicy;
             Connections = connections;
         }
 
         protected IConnection[] Connections { get; }
+
+        protected Policy RetryPolicy { get; }
 
         protected IDistributedLockFactory<TIdentity> DistributedLockFactory { get; }
 
@@ -42,20 +47,25 @@ namespace ScarletLock
 
             var preliminaryLock = DistributedLockFactory.GetPreliminaryLock(resource);
 
-            var startTime = DateTime.Now;
+            return await RetryPolicy
+                .ExecuteAsync(async () =>
+                {
+                    var startTime = DateTime.Now;
 
-            var locksAcquired = 0;
-            foreach (var connection in Connections)
-            {
-                if (await AttemptLockOnInstanceAsync(connection, preliminaryLock, TTL)) locksAcquired++;
-            }
+                    var locksAcquired = 0;
+                    foreach (var connection in Connections)
+                    {
+                        if (await AttemptLockOnInstanceAsync(connection, preliminaryLock, TTL)) locksAcquired++;
+                    }
 
-            var validityTime = TTL - (DateTime.Now - startTime) - drift;
+                    var validityTime = TTL - (DateTime.Now - startTime) - drift;
 
-            if (locksAcquired >= QuorumCount && validityTime.TotalMilliseconds > 0)
-                return DistributedLockFactory.EstablishLock(this, preliminaryLock, DateTime.Now + validityTime);
+                    if (locksAcquired >= QuorumCount && validityTime.TotalMilliseconds > 0)
+                        return DistributedLockFactory.EstablishLock(this, preliminaryLock, DateTime.Now + validityTime);
 
-            return null;
+                    throw new BlockedException();
+                });
+
         }
 
         protected async Task<bool> AttemptLockOnInstanceAsync(IConnection connection,
@@ -81,6 +91,12 @@ namespace ScarletLock
 
         public static async Task<DistributedLockManager<TIdentity>> CreateAndConnectAsync(TimeSpan defaultTTL, params ServerDetails[] servers)
         {
+            return await CreateAndConnectAsync(defaultTTL, -1, servers);
+        }
+
+        public static async Task<DistributedLockManager<TIdentity>> CreateAndConnectAsync(TimeSpan defaultTTL, 
+            int retryAttempts, params ServerDetails[] servers)
+        {
             var container = TinyIoCContainer.Current;
 
             var connectionFactory = container.Resolve<IConnectionFactory>();
@@ -92,7 +108,10 @@ namespace ScarletLock
                 connections[i] = await connectionFactory.CreateAndConnectAsync(servers[i].EndPoints);
             }
 
-            return new DistributedLockManager<TIdentity>(container.Resolve<IDistributedLockFactory<TIdentity>>(), defaultTTL, connections);
+            var retryPolicy = Policy.Handle<BlockedException>()
+                .WaitAndRetryAsync(GenerateRandomWaitSequence(-1));
+
+            return new DistributedLockManager<TIdentity>(container.Resolve<IDistributedLockFactory<TIdentity>>(), defaultTTL, retryPolicy, connections);
         }
 
         public override string ToString()
@@ -108,5 +127,17 @@ namespace ScarletLock
 
             return sb.ToString();
         }
+
+        private static IEnumerable<TimeSpan> GenerateRandomWaitSequence(int retries)
+        {
+            for (var i = 0; i != retries; i++)
+            {
+                if (i == int.MaxValue)
+                    i = 0;
+
+                yield return TimeSpan.FromMilliseconds(new Random().Next(10, 200));
+            }
+        }
+    
     }
 }
