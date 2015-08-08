@@ -8,7 +8,7 @@
     <licenseUrl>https://github.com/psibernetic/scarletlock/blob/master/LICENSE</licenseUrl>
     <projectUrl>https://github.com/psibernetic/scarletlock</projectUrl>
     <requireLicenseAcceptance>false</requireLicenseAcceptance>
-    <description>A flexible implementation of the Redlock algorithm that can be adapted to work with other data-stores.</description>
+    <description>Redis provider for ScarletLock, a flexible implementation of the Redlock algorithm that can be adapted to work with other data-stores.</description>
     <copyright>Copyright 2015</copyright>
     <tags>Redlock DLM redis lock distributed</tags>
     <dependencies>

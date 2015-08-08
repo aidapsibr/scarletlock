@@ -49,12 +49,14 @@
     <Compile Include="RedisConnection.cs" />
     <Compile Include="RedisConnectionFactory.cs" />
     <Compile Include="ScarletLockExtensions.cs" />
+    <Compile Include="Properties\SharedAssemblyInfo.cs" />
   </ItemGroup>
   <ItemGroup>
     <None Include="packages.config" />
+    <None Include="Properties\ScarletLock.Redis.nuspec" />
   </ItemGroup>
   <ItemGroup>
-    <ProjectReference Include="..\..\..\ScarletLock.Core\ScarletLock.Core.csproj">
+    <ProjectReference Include="..\ScarletLock.Core\ScarletLock.Core.csproj">
       <Project>{f753eb32-eae1-4928-9ac6-96c9b27aee45}</Project>
       <Name>ScarletLock.Core</Name>
     </ProjectReference>

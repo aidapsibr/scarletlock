@@ -11,9 +11,7 @@ Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Redis", "Redis", "{7453371F
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "ScarletLock.Core", "ScarletLock.Core\ScarletLock.Core.csproj", "{F753EB32-EAE1-4928-9AC6-96C9B27AEE45}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "ScarletLock.Redis", "Providers\Redis\ScarletLock.Redis\ScarletLock.Redis.csproj", "{30DEF511-7661-4588-8C76-294ADA2FE04F}"
-EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "ScarletLock.Redis.IntegrationTests", "Providers\Redis\ScarletLock.Redis.IntegrationTests\ScarletLock.Redis.IntegrationTests.csproj", "{B6CAA7E5-6EFF-4BF1-8032-8223A8B58B13}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "ScarletLock.Redis", "ScarletLock.Redis\ScarletLock.Redis.csproj", "{30DEF511-7661-4588-8C76-294ADA2FE04F}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -33,10 +31,6 @@ Global
 		{30DEF511-7661-4588-8C76-294ADA2FE04F}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{30DEF511-7661-4588-8C76-294ADA2FE04F}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{30DEF511-7661-4588-8C76-294ADA2FE04F}.Release|Any CPU.Build.0 = Release|Any CPU
-		{B6CAA7E5-6EFF-4BF1-8032-8223A8B58B13}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
-		{B6CAA7E5-6EFF-4BF1-8032-8223A8B58B13}.Debug|Any CPU.Build.0 = Debug|Any CPU
-		{B6CAA7E5-6EFF-4BF1-8032-8223A8B58B13}.Release|Any CPU.ActiveCfg = Release|Any CPU
-		{B6CAA7E5-6EFF-4BF1-8032-8223A8B58B13}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
@@ -44,6 +38,5 @@ Global
 	GlobalSection(NestedProjects) = preSolution
 		{7453371F-1197-4E47-9639-B6BAFBA390A4} = {EBC1DEF3-964F-4732-B346-461A393C02E4}
 		{30DEF511-7661-4588-8C76-294ADA2FE04F} = {7453371F-1197-4E47-9639-B6BAFBA390A4}
-		{B6CAA7E5-6EFF-4BF1-8032-8223A8B58B13} = {7453371F-1197-4E47-9639-B6BAFBA390A4}
 	EndGlobalSection
 EndGlobal
