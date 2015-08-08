@@ -53,7 +53,7 @@
   </ItemGroup>
   <ItemGroup>
     <None Include="packages.config" />
-    <None Include="Properties\ScarletLock.Redis.nuspec" />
+    <None Include="ScarletLock.Redis.nuspec" />
   </ItemGroup>
   <ItemGroup>
     <ProjectReference Include="..\ScarletLock.Core\ScarletLock.Core.csproj">
