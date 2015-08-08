@@ -3,11 +3,17 @@ Microsoft Visual Studio Solution File, Format Version 12.00
 # Visual Studio 14
 VisualStudioVersion = 14.0.23107.0
 MinimumVisualStudioVersion = 10.0.40219.1
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "ScarletLock", "ScarletLock\ScarletLock.csproj", "{F753EB32-EAE1-4928-9AC6-96C9B27AEE45}"
-EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "ScarletLock.Tests", "ScarletLock.Tests\ScarletLock.Tests.csproj", "{B6CAA7E5-6EFF-4BF1-8032-8223A8B58B13}"
-EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "ScarletLock.Example", "ScarletLock.Example\ScarletLock.Example.csproj", "{3BEC003B-402A-4B3A-8FC3-9A07EC23F094}"
+EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Providers", "Providers", "{EBC1DEF3-964F-4732-B346-461A393C02E4}"
+EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Redis", "Redis", "{7453371F-1197-4E47-9639-B6BAFBA390A4}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "ScarletLock.Core", "ScarletLock.Core\ScarletLock.Core.csproj", "{F753EB32-EAE1-4928-9AC6-96C9B27AEE45}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "ScarletLock.Redis", "Providers\Redis\ScarletLock.Redis\ScarletLock.Redis.csproj", "{30DEF511-7661-4588-8C76-294ADA2FE04F}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "ScarletLock.Redis.IntegrationTests", "Providers\Redis\ScarletLock.Redis.IntegrationTests\ScarletLock.Redis.IntegrationTests.csproj", "{B6CAA7E5-6EFF-4BF1-8032-8223A8B58B13}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -15,20 +21,29 @@ Global
 		Release|Any CPU = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(ProjectConfigurationPlatforms) = postSolution
-		{F753EB32-EAE1-4928-9AC6-96C9B27AEE45}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
-		{F753EB32-EAE1-4928-9AC6-96C9B27AEE45}.Debug|Any CPU.Build.0 = Debug|Any CPU
-		{F753EB32-EAE1-4928-9AC6-96C9B27AEE45}.Release|Any CPU.ActiveCfg = Release|Any CPU
-		{F753EB32-EAE1-4928-9AC6-96C9B27AEE45}.Release|Any CPU.Build.0 = Release|Any CPU
-		{B6CAA7E5-6EFF-4BF1-8032-8223A8B58B13}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
-		{B6CAA7E5-6EFF-4BF1-8032-8223A8B58B13}.Debug|Any CPU.Build.0 = Debug|Any CPU
-		{B6CAA7E5-6EFF-4BF1-8032-8223A8B58B13}.Release|Any CPU.ActiveCfg = Release|Any CPU
-		{B6CAA7E5-6EFF-4BF1-8032-8223A8B58B13}.Release|Any CPU.Build.0 = Release|Any CPU
 		{3BEC003B-402A-4B3A-8FC3-9A07EC23F094}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
 		{3BEC003B-402A-4B3A-8FC3-9A07EC23F094}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{3BEC003B-402A-4B3A-8FC3-9A07EC23F094}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{3BEC003B-402A-4B3A-8FC3-9A07EC23F094}.Release|Any CPU.Build.0 = Release|Any CPU
+		{F753EB32-EAE1-4928-9AC6-96C9B27AEE45}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{F753EB32-EAE1-4928-9AC6-96C9B27AEE45}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{F753EB32-EAE1-4928-9AC6-96C9B27AEE45}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{F753EB32-EAE1-4928-9AC6-96C9B27AEE45}.Release|Any CPU.Build.0 = Release|Any CPU
+		{30DEF511-7661-4588-8C76-294ADA2FE04F}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{30DEF511-7661-4588-8C76-294ADA2FE04F}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{30DEF511-7661-4588-8C76-294ADA2FE04F}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{30DEF511-7661-4588-8C76-294ADA2FE04F}.Release|Any CPU.Build.0 = Release|Any CPU
+		{B6CAA7E5-6EFF-4BF1-8032-8223A8B58B13}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{B6CAA7E5-6EFF-4BF1-8032-8223A8B58B13}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{B6CAA7E5-6EFF-4BF1-8032-8223A8B58B13}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{B6CAA7E5-6EFF-4BF1-8032-8223A8B58B13}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
+	EndGlobalSection
+	GlobalSection(NestedProjects) = preSolution
+		{7453371F-1197-4E47-9639-B6BAFBA390A4} = {EBC1DEF3-964F-4732-B346-461A393C02E4}
+		{30DEF511-7661-4588-8C76-294ADA2FE04F} = {7453371F-1197-4E47-9639-B6BAFBA390A4}
+		{B6CAA7E5-6EFF-4BF1-8032-8223A8B58B13} = {7453371F-1197-4E47-9639-B6BAFBA390A4}
 	EndGlobalSection
 EndGlobal

@@ -3,7 +3,7 @@ using System.Linq;
 using System.Net;
 using System.Threading.Tasks;
 
-namespace ScarletLock.Tests.Mocks
+namespace ScarletLock.Redis.IntegrationTests.Mocks
 {
     public class MockConnection
         : IConnection
@@ -15,7 +15,7 @@ namespace ScarletLock.Tests.Mocks
 
         public EndPoint[] Endpoints { get; }
 
-        public async Task<bool> SetStringWhenNotSetAsync(string resource, string identity, TimeSpan TTL)
+        public async Task<bool> SetStringWhenNotSetAsync(string resource, string identity, TimeSpan ttl)
         {
             return await Task.FromResult(true);
         }

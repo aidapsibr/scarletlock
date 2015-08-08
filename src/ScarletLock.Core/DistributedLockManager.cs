@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Security.Cryptography.X509Certificates;
 using System.Text;
 using System.Threading.Tasks;
 using Polly;
@@ -41,9 +42,9 @@ namespace ScarletLock
             return await AcquireDistributedLockAsync(resource, DefaultTTL);
         }
 
-        public async Task<IDistributedLock<TIdentity>> AcquireDistributedLockAsync(string resource, TimeSpan TTL)
+        public async Task<IDistributedLock<TIdentity>> AcquireDistributedLockAsync(string resource, TimeSpan ttl)
         {
-            var drift = TimeSpan.FromMilliseconds(Convert.ToInt32((TTL.TotalMilliseconds * 0.01) + 2));
+            var drift = TimeSpan.FromMilliseconds(Convert.ToInt32((ttl.TotalMilliseconds * 0.01) + 2));
 
             var preliminaryLock = DistributedLockFactory.GetPreliminaryLock(resource);
 
@@ -53,27 +54,34 @@ namespace ScarletLock
                     var startTime = DateTime.Now;
 
                     var locksAcquired = 0;
+                    var temporaryLocks = new List<IConnection>();
                     foreach (var connection in Connections)
-                    {
-                        if (await AttemptLockOnInstanceAsync(connection, preliminaryLock, TTL)) locksAcquired++;
-                    }
+                        if (await AttemptLockOnInstanceAsync(connection, preliminaryLock, ttl))
+                        {
+                            temporaryLocks.Add(connection);
+                            locksAcquired++;
+                        }
 
-                    var validityTime = TTL - (DateTime.Now - startTime) - drift;
+                    var validityTime = ttl - (DateTime.Now - startTime) - drift;
 
                     if (locksAcquired >= QuorumCount && validityTime.TotalMilliseconds > 0)
                         return DistributedLockFactory.EstablishLock(this, preliminaryLock, DateTime.Now + validityTime);
 
+                    //Locking was not successful, release our previous locks.
+                    foreach (var connection in temporaryLocks)
+                        await UnlockOnInstanceAsync(connection, preliminaryLock);
+
+                    //We need to wait, throw so retry policy can execute.
                     throw new BlockedException();
                 });
-
         }
 
         protected async Task<bool> AttemptLockOnInstanceAsync(IConnection connection,
-            PreliminaryLock<TIdentity> preliminaryLock, TimeSpan TTL)
+            PreliminaryLock<TIdentity> preliminaryLock, TimeSpan ttl)
         {
             try
             {
-                return await connection.SetStringWhenNotSetAsync(preliminaryLock.Resource, preliminaryLock.Identity.ToString(), TTL);
+                return await connection.SetStringWhenNotSetAsync(preliminaryLock.Resource, preliminaryLock.Identity.ToString(), ttl);
             }
             catch (Exception ex)
             {
@@ -89,12 +97,17 @@ namespace ScarletLock
             await connection.DeleteIfMatchedAsync(distributedLock.Resource, distributedLock.Identity.ToString());
         }
 
-        public static async Task<DistributedLockManager<TIdentity>> CreateAndConnectAsync(TimeSpan defaultTTL, params ServerDetails[] servers)
+        protected async Task UnlockOnInstanceAsync(IConnection connection, PreliminaryLock<TIdentity> preliminaryLock)
+        {
+            await connection.DeleteIfMatchedAsync(preliminaryLock.Resource, preliminaryLock.Identity.ToString());
+        }
+
+        internal static async Task<DistributedLockManager<TIdentity>> CreateAndConnectAsync(TimeSpan defaultTTL, params ServerDetails[] servers)
         {
             return await CreateAndConnectAsync(defaultTTL, -1, servers);
         }
 
-        public static async Task<DistributedLockManager<TIdentity>> CreateAndConnectAsync(TimeSpan defaultTTL, 
+        internal static async Task<DistributedLockManager<TIdentity>> CreateAndConnectAsync(TimeSpan defaultTTL,
             int retryAttempts, params ServerDetails[] servers)
         {
             var container = TinyIoCContainer.Current;
@@ -138,6 +151,6 @@ namespace ScarletLock
                 yield return TimeSpan.FromMilliseconds(new Random().Next(10, 200));
             }
         }
-    
+
     }
 }

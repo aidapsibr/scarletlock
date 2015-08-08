@@ -49,9 +49,8 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="BlockedException.cs" />
-    <Compile Include="RedisConnectionFactory.cs" />
+    <Compile Include="DistributedLockManagerFactory.cs" />
     <Compile Include="IConnectionFactory.cs" />
-    <Compile Include="RedisConnection.cs" />
     <Compile Include="IConnection.cs" />
     <Compile Include="DistributedLock.cs" />
     <Compile Include="DistributedLockFactory.cs" />
@@ -60,9 +59,10 @@
     <Compile Include="IDistributedLockFactory.cs" />
     <Compile Include="DistributedLockManager.cs" />
     <Compile Include="IDistributedLockManager.cs" />
-    <Compile Include="DependencyModule.cs" />
+    <Compile Include="IDistributedLockManagerFactory.cs" />
     <Compile Include="PreliminaryLock.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
+    <Compile Include="ScarletLock.cs" />
     <Compile Include="ServerDetails.cs" />
     <Compile Include="TinyIoC.cs" />
   </ItemGroup>

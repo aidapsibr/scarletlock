@@ -9,8 +9,8 @@
     <ProjectGuid>{B6CAA7E5-6EFF-4BF1-8032-8223A8B58B13}</ProjectGuid>
     <OutputType>Library</OutputType>
     <AppDesignerFolder>Properties</AppDesignerFolder>
-    <RootNamespace>ScarletLock.Tests</RootNamespace>
-    <AssemblyName>ScarletLock.Tests</AssemblyName>
+    <RootNamespace>ScarletLock.Redis.IntegrationTests</RootNamespace>
+    <AssemblyName>ScarletLock.Redis.IntegrationTests</AssemblyName>
     <TargetFrameworkVersion>v4.5</TargetFrameworkVersion>
     <FileAlignment>512</FileAlignment>
     <NuGetPackageImportStamp>
@@ -66,9 +66,13 @@
     <None Include="packages.config" />
   </ItemGroup>
   <ItemGroup>
-    <ProjectReference Include="..\ScarletLock\ScarletLock.csproj">
+    <ProjectReference Include="..\ScarletLock.Redis\ScarletLock.Redis.csproj">
+      <Project>{30def511-7661-4588-8c76-294ada2fe04f}</Project>
+      <Name>ScarletLock.Redis</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\..\..\ScarletLock.Core\ScarletLock.Core.csproj">
       <Project>{F753EB32-EAE1-4928-9AC6-96C9B27AEE45}</Project>
-      <Name>ScarletLock</Name>
+      <Name>ScarletLock.Core</Name>
     </ProjectReference>
   </ItemGroup>
   <ItemGroup>

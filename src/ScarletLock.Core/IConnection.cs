@@ -8,7 +8,7 @@ namespace ScarletLock
     {
         EndPoint[] Endpoints { get; }
 
-        Task<bool> SetStringWhenNotSetAsync(string resource, string identity, TimeSpan TTL);
+        Task<bool> SetStringWhenNotSetAsync(string resource, string identity, TimeSpan ttl);
 
         Task DeleteIfMatchedAsync(string resource, string identity);
 

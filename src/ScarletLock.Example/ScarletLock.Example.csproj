@@ -50,9 +50,13 @@
     <None Include="App.config" />
   </ItemGroup>
   <ItemGroup>
-    <ProjectReference Include="..\ScarletLock\ScarletLock.csproj">
+    <ProjectReference Include="..\Providers\Redis\ScarletLock.Redis\ScarletLock.Redis.csproj">
+      <Project>{30def511-7661-4588-8c76-294ada2fe04f}</Project>
+      <Name>ScarletLock.Redis</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\ScarletLock.Core\ScarletLock.Core.csproj">
       <Project>{f753eb32-eae1-4928-9ac6-96c9b27aee45}</Project>
-      <Name>ScarletLock</Name>
+      <Name>ScarletLock.Core</Name>
     </ProjectReference>
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />

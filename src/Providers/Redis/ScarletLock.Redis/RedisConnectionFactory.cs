@@ -1,7 +1,7 @@
 ﻿using System.Net;
 using System.Threading.Tasks;
 
-namespace ScarletLock
+namespace ScarletLock.Redis
 {
     public class RedisConnectionFactory : IConnectionFactory
     {

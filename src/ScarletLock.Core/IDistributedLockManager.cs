@@ -8,6 +8,6 @@ namespace ScarletLock
         TimeSpan DefaultTTL { get; }
         Task ReleaseDistributedLockAsync(IDistributedLock<TIdentity> distributedLock);
         Task<IDistributedLock<TIdentity>> AcquireDistributedLockAsync(string resource);
-        Task<IDistributedLock<TIdentity>> AcquireDistributedLockAsync(string resource, TimeSpan TTL);
+        Task<IDistributedLock<TIdentity>> AcquireDistributedLockAsync(string resource, TimeSpan ttl);
     }
 }

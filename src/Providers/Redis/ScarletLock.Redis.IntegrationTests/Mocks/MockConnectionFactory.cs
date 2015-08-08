@@ -1,7 +1,7 @@
 ﻿using System.Net;
 using System.Threading.Tasks;
 
-namespace ScarletLock.Tests.Mocks
+namespace ScarletLock.Redis.IntegrationTests.Mocks
 {
     public class MockConnectionFactory 
         : IConnectionFactory

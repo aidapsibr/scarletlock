@@ -3,7 +3,7 @@ using System.Net;
 using System.Threading.Tasks;
 using StackExchange.Redis;
 
-namespace ScarletLock
+namespace ScarletLock.Redis
 {
     public class RedisConnection
         : IConnection
@@ -27,10 +27,10 @@ namespace ScarletLock
 
         public EndPoint[] Endpoints => RedisConnectionMultiplexer.GetEndPoints();
 
-        public async Task<bool> SetStringWhenNotSetAsync(string resource, string identity, TimeSpan TTL)
+        public async Task<bool> SetStringWhenNotSetAsync(string resource, string identity, TimeSpan ttl)
         {
             return await RedisConnectionMultiplexer.GetDatabase()
-                .StringSetAsync(resource, identity, TTL, When.NotExists);
+                .StringSetAsync(resource, identity, ttl, When.NotExists);
         }
 
         public async Task DeleteIfMatchedAsync(string resource, string identity)
