@@ -1,0 +1,17 @@
+<?xml version="1.0"?>
+<package >
+  <metadata>
+    <id>ScarletLock.Core</id>
+    <version>1.0.0</version>
+    <authors>Donovan Crone, Michael Davidson</authors>
+    <owners>Donovan Crone, Michael Davidson</owners>
+    <licenseUrl>https://github.com/psibernetic/scarletlock/blob/master/LICENSE</licenseUrl>
+    <projectUrl>https://github.com/psibernetic/scarletlock</projectUrl>
+    <requireLicenseAcceptance>false</requireLicenseAcceptance>
+    <description>A flexible implementation of the Redlock algorithm that can be adapted to work with other data-stores.</description>
+    <copyright>Copyright 2015</copyright>
+    <tags>Redlock DLM redis lock distributed</tags>
+    <dependencies>
+    </dependencies>
+  </metadata>
+</package>
