@@ -33,6 +33,14 @@
     <WarningLevel>4</WarningLevel>
   </PropertyGroup>
   <ItemGroup>
+    <Reference Include="ScarletLock, Version=1.0.0.0, Culture=neutral, processorArchitecture=MSIL">
+      <HintPath>..\packages\ScarletLock.Core.1.0.0\lib\net45\ScarletLock.dll</HintPath>
+      <Private>True</Private>
+    </Reference>
+    <Reference Include="ScarletLock.Redis, Version=0.0.0.0, Culture=neutral, processorArchitecture=MSIL">
+      <HintPath>..\packages\ScarletLock.Redis.1.0.0\lib\net45\ScarletLock.Redis.dll</HintPath>
+      <Private>True</Private>
+    </Reference>
     <Reference Include="System" />
     <Reference Include="System.Core" />
     <Reference Include="System.Xml.Linq" />
@@ -48,16 +56,7 @@
   </ItemGroup>
   <ItemGroup>
     <None Include="App.config" />
-  </ItemGroup>
-  <ItemGroup>
-    <ProjectReference Include="..\ScarletLock.Core\ScarletLock.Core.csproj">
-      <Project>{f753eb32-eae1-4928-9ac6-96c9b27aee45}</Project>
-      <Name>ScarletLock.Core</Name>
-    </ProjectReference>
-    <ProjectReference Include="..\ScarletLock.Redis\ScarletLock.Redis.csproj">
-      <Project>{30def511-7661-4588-8c76-294ada2fe04f}</Project>
-      <Name>ScarletLock.Redis</Name>
-    </ProjectReference>
+    <None Include="packages.config" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 
