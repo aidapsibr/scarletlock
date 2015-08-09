@@ -2,6 +2,7 @@
 <package >
   <metadata>
     <id>ScarletLock.Redis</id>
+    <version>1.0.0</version>
     <authors>Donovan Crone, Michael Davidson</authors>
     <owners>Donovan Crone, Michael Davidson</owners>
     <licenseUrl>https://github.com/psibernetic/scarletlock/blob/master/LICENSE</licenseUrl>
@@ -11,7 +12,7 @@
     <copyright>Copyright 2015</copyright>
     <tags>Redlock DLM redis lock distributed</tags>
     <dependencies>
-	    <dependency id="ScarletLock.Core" version="1.0.0" />
+	<dependency id="ScarletLock.Core" version="1.0.0" />
     </dependencies>
   </metadata>
 </package>

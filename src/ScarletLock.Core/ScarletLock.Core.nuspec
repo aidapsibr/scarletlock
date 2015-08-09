@@ -2,6 +2,7 @@
 <package >
   <metadata>
     <id>ScarletLock.Core</id>
+    <version>1.0.0</version>
     <authors>Donovan Crone, Michael Davidson</authors>
     <owners>Donovan Crone, Michael Davidson</owners>
     <licenseUrl>https://github.com/psibernetic/scarletlock/blob/master/LICENSE</licenseUrl>
